@@ -7,9 +7,6 @@
 {% block content%}
 	<form action="{% url 'create' %}" method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
-		{% if item.img %}
-		    <img class="card-img-top" src="{{item.img.url}}" alt="Card image cap">
-		{% endif %}
 	{{form.as_p}}
 	<input type="submit" value="create">
 	</form>

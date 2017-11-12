@@ -25,22 +25,18 @@ def post_list(request):
 
 
 
-
-
-
 def post_detail(request, post_id):
 	item = Fatmaa.objects.get(id=post_id)
 	context ={"item": item}
 	return render(request, "detail.html", context)
 
 def post_create(request):
-	item = Fatmaa.objects.all()
 	form = PostForm(request.POST or None , request.FILES or None)
 	if form.is_valid():
 		form.save()
 		messages.success(request, "Awesome, you just added a blog post !")
 		return redirect("list")
-	context ={"form":form , "item":item}
+	context ={"form":form}
 	return render(request, "post_create.html", context)
 
 def post_update(request, post_id):
