@@ -1,14 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title></title>
-</head>
-<body>
-	<ul>
-		<li>{{item.title}}</li>
-		<li>{{item.content}}</li>
-		<li>{{item.id}}</li>
-	</ul>
-</body>
-</html>
+{%extends "base.html" %}
+
+{% block heading %}
+    detail
+{% endblock %}
+
+{% block content%}
+
+<div class="card" style="width: 20rem;">
+  <ul class="list-group list-group-flush">
+  	{% if item.img %}
+		    <img class="card-img-top" src="{{item.img.url}}" alt="Card image cap">
+		{% endif %}
+  	<div class="p-3 mb-2 bg-success text-white">{{item.title}}</div>
+  	<div class="p-3 mb-2 bg-danger text-white">{{item.content}}</div>
+  	<div class="p-3 mb-2 bg-warning text-white">{{item.id}}</div>
+  </ul>
+</div>	
+{% endblock content %}
+
+

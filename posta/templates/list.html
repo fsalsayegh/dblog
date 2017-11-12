@@ -1,16 +1,51 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<title></title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block heading %}
+	List
+{% endblock %}
+
+{% block content%}
+
+
+<div class="jumbotron">
+  <h1 class="display-3">This is a post</h1>
+  <a class="btn btn-primary btn-lg" href="{% url 'create' %}" role="button">create</a>
+  </p>
+</div>
+
+<div class="row">
 	{% for item in post_items %}
-	<ul>
-		<a href="{{item.get_detail_url}}"><li>{{item.title}}</li></a>
-		<li>{{item.content}}</li>
-		<li>{{item.id}}</li>
-	</ul>
+	<div class="card col-xs-12 col-md-4" style="width: 20rem;">
+		{% if item.img %}
+		    <img class="card-img-top" src="{{item.img.url}}" alt="Card image cap">
+		{% endif %}
+		<div class="card-body">
+			<h4 class="card-title">{{item.title}} <small>{{item.updated|timesince}}</small></h4>
+			<h4 class="card-text">{{item.content|linebreaks|truncatechars:30}}</h4>
+			<h4 class="card-title">{{item.id}}</h4>
+			<a href="{% url 'delete' post_id=item.id %}" class="btn btn-info">delete</a>
+			<a href="{% url 'update' post_id=item.id %}" class="btn btn-danger">update</a>
+			<a href="{% url 'detail' post_id=item.id %}" class="btn btn-success">detail</a>
+		</div>
+	</div>
+	
 	{% endfor %}
-</body>
-</html>
+
+	<div class="pagination">
+	<span class="step-links">
+		{% if post_items.has_previous %}
+			<a href="?page={{ post_items.previous_page_number }}">previous</a>
+		{% endif %}
+
+		<span class="current">
+			Page {{ post_items.number }} of {{ post_items.paginator.num_pages }}
+		</span>
+
+		{% if post_items.has_next %}
+			<a href="?page={{ post_items.next_page_number }}">next</a>
+		{% endif %}
+	</span>
+</div>
+{% endblock content %}
+</div>
+
