@@ -23,9 +23,9 @@
 			<h4 class="card-title">{{item.title}} <small>{{item.updated|timesince}}</small></h4>
 			<h4 class="card-text">{{item.content|linebreaks|truncatechars:30}}</h4>
 			<h4 class="card-title">{{item.id}}</h4>
-			<a href="{% url 'delete' post_id=item.id %}" class="btn btn-info">delete</a>
-			<a href="{% url 'update' post_id=item.id %}" class="btn btn-danger">update</a>
-			<a href="{% url 'detail' post_id=item.id %}" class="btn btn-success">detail</a>
+			<a href="{% url 'delete' post_slug=item.slug %}" class="btn btn-info">delete</a>
+			<a href="{% url 'update' post_slug=item.slug %}" class="btn btn-danger">update</a>
+			<a href="{% url 'detail' post_slug=item.slug %}" class="btn btn-success">detail</a>
 		</div>
 	</div>
 	

@@ -25,8 +25,8 @@ def post_list(request):
 
 
 
-def post_detail(request, post_id):
-	item = Fatmaa.objects.get(id=post_id)
+def post_detail(request, post_slug):
+	item = Fatmaa.objects.get(slug=post_slug)
 	context ={"item": item}
 	return render(request, "detail.html", context)
 
@@ -39,8 +39,8 @@ def post_create(request):
 	context ={"form":form}
 	return render(request, "post_create.html", context)
 
-def post_update(request, post_id):
-	item = Fatmaa.objects.get(id=post_id)
+def post_update(request, post_slug):
+	item = Fatmaa.objects.get(slug=post_slug)
 	form = PostForm(request.POST or None, request.FILES or None, instance=item)
 	if form.is_valid():
 		form.save()
@@ -49,8 +49,8 @@ def post_update(request, post_id):
 	context ={"form":form, "item":item}
 	return render(request, "post_update.html", context)
 
-def post_delete(request, post_id):
-	Fatmaa.objects.get(id=post_id).delete()
+def post_delete(request, post_slug):
+	Fatmaa.objects.get(slug=post_slug).delete()
 	messages.warning(request, "deleted")
 	return redirect("list")
 
