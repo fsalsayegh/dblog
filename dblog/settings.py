@@ -39,8 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'posta',
+<<<<<<< HEAD
     'crispy_forms',
     'django_comments',
+=======
+    'googly',
+
+>>>>>>> master
 
 ]
 
