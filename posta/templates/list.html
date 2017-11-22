@@ -1,40 +1,66 @@
 {% extends "base.html" %}
 
-{% block heading %}
-	List
-{% endblock %}
 
 {% block content%}
 
 
 <div class="jumbotron">
+
   <h1 class="display-3">This is a post</h1>
   <a class="btn btn-primary btn-lg" href="{% url 'create' %}" role="button">create</a>
-  </p>
+  
+  <form action="{%url 'list'%}" method ="GET">
+
+	<input type="text" name="q" placeholder="Search..." value="{{request.GET.q}}" >
+	<input type="submit" value="search">
+
+  </form>
 </div>
 
 <div class="row">
 	{% for item in post_items %}
-	<div class="card col-xs-12 col-md-4" style="width: 20rem;">
-		{% if item.img %}
-		    <img class="card-img-top" src="{{item.img.url}}" alt="Card image cap">
-		{% endif %}
-		<div class="card-body">
-			<h4 class="card-title">{{item.title}} <small>{{item.updated|timesince}}</small></h4>
-			<h4 class="card-text">{{item.content|linebreaks|truncatechars:30}}</h4>
-			<h4 class="card-title">{{item.id}}</h4>
-			<a href="{% url 'delete' post_slug=item.slug %}" class="btn btn-info">delete</a>
-			<a href="{% url 'update' post_slug=item.slug %}" class="btn btn-danger">update</a>
-			<a href="{% url 'detail' post_slug=item.slug %}" class="btn btn-success">detail</a>
+		<div class="card col-xs-12 col-md-4" style="width: 20rem;">
+			{% if item.img %}
+			    <img class="card-img-top" src="{{item.img.url}}" alt="Card image cap">
+			{% endif %}
+			<div class="card-body">
+				<h4 class="card-title">Title: {{item.title}}<small>
+					{{item.publish_date|timesince}}</small>
+				</h4>
+
+				{% if item.draft %}
+					<span class="text-danger">
+					Draft
+					</span>
+				{% endif %}
+
+				{% if item.publish_date > today %}
+					<span class="text-success">
+					Future Post
+					</span>	
+				{% endif %}
+
+				<h4 class="card-text">content: {{item.content|linebreaks|truncatechars:30}}</h4>
+				<h4 class="card-title">ID: {{item.id}}</h4>
+				<h4 class="card-title">Author: {{item.author.get_full_name}}</h4>
+				<a href="{% url 'delete' post_slug=item.slug %}" class="btn btn-info">delete</a>
+				<a href="{% url 'update' post_slug=item.slug %}" class="btn btn-danger">update</a>
+				<a href="{% url 'detail' post_slug=item.slug %}" class="btn btn-success">detail</a>
+
+			</div>
 		</div>
-	</div>
+		{% empty %}
+			<span class=""></span>
 	
 	{% endfor %}
+
+
+
 
 	<div class="pagination">
 	<span class="step-links">
 		{% if post_items.has_previous %}
-			<a href="?page={{ post_items.previous_page_number }}">previous</a>
+			<a href="?page={{ post_items.previous_page_number }}&q={{request.GET.q}}">previous</a>
 		{% endif %}
 
 		<span class="current">
@@ -42,7 +68,7 @@
 		</span>
 
 		{% if post_items.has_next %}
-			<a href="?page={{ post_items.next_page_number }}">next</a>
+			<a href="?page={{ post_items.next_page_number}}&q={{request.GET.q}}">next</a>
 		{% endif %}
 	</span>
 </div>
