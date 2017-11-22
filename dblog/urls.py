@@ -21,7 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^home/', include('posta.urls'), name="home")
+    url(r'^home/', include('posta.urls'), name="home"),
+    url(r'^googly/', include('googly.urls'), name="googly")
 ]
 if settings.DEBUG:
 	urlpatterns+= static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
