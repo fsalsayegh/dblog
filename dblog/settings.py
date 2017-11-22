@@ -37,11 +37,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'posta',
+<<<<<<< HEAD
+    'crispy_forms',
+    'django_comments',
+=======
     'googly',
 
+>>>>>>> master
 
 ]
+
+CRISPY_TEMPLATE_PACK="bootstrap4"
+SITE_ID= 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
