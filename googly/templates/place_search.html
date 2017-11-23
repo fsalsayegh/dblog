@@ -1,14 +1,30 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html>
-<head>
-	<title> </title>
-</head>
-<body>
+{% block content%}
+<form action="{% url 'place-search' %}" method="GET">
+<div class="col-lg-6">
+	<div class="input-group">
+		<input type="text" class="form-control" placeholder="Search for..." aria-label="Search for..." name="query">
+		<span class="input-group-btn">
+			<button class="btn btn-secondary" type="submit">Search</button>
+		</span>
+	</div>
+</div>
+</form>
 	{%for place in response.results %}
-		<p>{{place.name}}/ {{place.formatted_address}}</p>
+		<p>{{place.name}}</p>
+		<p>{{place.formatted_address}}</p>
+		<form action="{%url 'place-detail'%}" method="GET">
+			<input type="hidden" name="place_id" value="{{place.place_id}}">
+			<input type="submit" value="detail"  class="btn btn-outline-info">
+		</form>
 	{% endfor%}
 
+	{% if response.next_page_token %}
 
-</body>
-</html>
+		<form action="{%url 'place-search'%}" method="GET">
+			<input type="hidden" name="nextpage" value="{{response.next_page_token}}">
+			<input type="submit" value="More results..."  class="btn btn-outline-info">
+		</form>
+	{% endif %}
+{% endblock content%}
