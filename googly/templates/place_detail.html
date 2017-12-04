@@ -18,6 +18,7 @@
   src= "https://www.google.com/maps/embed/v1/directions
   ?key=YOUR_API_KEY&origin=Oslo+Norway&destination=T{{response.result.geometry.location.lat}}, {{response.result.geometry.location.lng}}" allowfullscreen>
 </iframe>
+
 <script>
 function do_something(lat, lng){
 	var map = $("#map");
@@ -29,7 +30,5 @@ function do_something(lat, lng){
 navigator.geolocation.getCurrentPosition(function(position) {
   do_something(position.coords.latitude, position.coords.longitude);
 });
-	
-
 </script>
 {% endblock content%}

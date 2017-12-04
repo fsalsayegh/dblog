@@ -18,6 +18,9 @@
 			<input type="hidden" name="place_id" value="{{place.place_id}}">
 			<input type="submit" value="detail"  class="btn btn-outline-info">
 		</form>
+		{% comment %}
+			<a href="{%url 'place-detail'%}?place_id={{place.place_id}}" class="btn btn-outline-info">Detail</a>	
+		{% endcomment %}
 	{% endfor%}
 
 	{% if response.next_page_token %}

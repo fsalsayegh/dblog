@@ -7,9 +7,9 @@
 <div class="jumbotron">
 
   <h1 class="display-3">This is a post</h1>
-  <a class="btn btn-primary btn-lg" href="{% url 'create' %}" role="button">create</a>
+  <a class="btn btn-primary btn-lg" href="{% url 'home:create' %}" role="button">create</a>
   
-  <form action="{%url 'list'%}" method ="GET">
+  <form action="{%url 'home:list'%}" method ="GET">
 
 	<input type="text" name="q" placeholder="Search..." value="{{request.GET.q}}" >
 	<input type="submit" value="search">
@@ -43,9 +43,9 @@
 				<h4 class="card-text">content: {{item.content|linebreaks|truncatechars:30}}</h4>
 				<h4 class="card-title">ID: {{item.id}}</h4>
 				<h4 class="card-title">Author: {{item.author.get_full_name}}</h4>
-				<a href="{% url 'delete' post_slug=item.slug %}" class="btn btn-info">delete</a>
-				<a href="{% url 'update' post_slug=item.slug %}" class="btn btn-danger">update</a>
-				<a href="{% url 'detail' post_slug=item.slug %}" class="btn btn-success">detail</a>
+				<a href="{% url 'home:delete' post_slug=item.slug %}" class="btn btn-info">delete</a>
+				<a href="{% url 'home:update' post_slug=item.slug %}" class="btn btn-danger">update</a>
+				<a href="{% url 'home:detail' post_slug=item.slug %}" class="btn btn-success">detail</a>
 
 			</div>
 		</div>

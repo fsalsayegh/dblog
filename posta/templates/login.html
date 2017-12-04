@@ -3,10 +3,25 @@
 
 
 {% block content%}
-<form action="{%url 'login'%}" method="POST">
+<form action="{%url 'home:login'%}" method="POST">
 	{% csrf_token %}
 	{{form|crispy}}
-	<input class="btn btn-success" type="submit" value="login">
+	<table>
+		<tr>
+			<td>
+				<input class="btn btn-success" type="submit" value="login">
+			</td>
+			<td>
+				<a href="{%url 'github_login' %}" class="btn btn-dark"><i class="fa fa-github-alt" aria-hidden="true"> Login using Github</i>
+			</td>
+			<td>
+				<a href="{%url 'twitter_login' %}" class="btn btn-primary"><i class="fa fa-twitter" aria-hidden="true"> Login using Twitter</i></a>
+			</td>
+		</tr>
+	</table>
+	
+		{% comment %}
+		{% endcomment %}
 	
 </form>
 

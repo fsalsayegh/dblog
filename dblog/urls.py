@@ -21,11 +21,15 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^home/', include('posta.urls'), name="home"),
+    url(r'^home/', include('posta.urls', namespace="home")),
 
     url(r'^comments/', include('django_comments.urls')),
 
-    url(r'^googly/', include('googly.urls'), name="googly")
+    url(r'^googly/', include('googly.urls' , namespace="googly")),
+    url(r'^gitty/', include('gitty.urls' , namespace="gitty")),
+    url(r'^accounts/', include('allauth.urls')),
+    url(r'^twitty/', include('twitty.urls' , namespace="twitty")),
+    url(r'^api/', include('api.urls' , namespace="api")),
 
 ]
 if settings.DEBUG:
