@@ -1,17 +1,40 @@
-from rest_framework.generics import ListAPIView , RetrieveAPIView ,DestroyAPIView , CreateAPIView, RetrieveUpdateAPIView
+from rest_framework.generics import  ListAPIView , RetrieveAPIView ,DestroyAPIView , CreateAPIView, RetrieveUpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from posta.models import Fatmaa  #we add posta.models not .models cause not in the same directory 
 
 from .serializers import *
 from .permissions import IsAuthor
 from django.db.models import Q
-from rest_framework.filters import SearchFilter #import library to filter
+from rest_framework.filters import SearchFilter , OrderingFilter #import library to filter
 from django_comments.models import Comment
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 from django.utils import timezone
+from rest_framework.views import APIView
+from rest_framework.status import HTTP_400_BAD_REQUEST , HTTP_200_OK
+from rest_framework.response import Response
+
+class UserLoginView(APIView):
+	permission_classes = [AllowAny]
+	serializer_class = UserLoginSerializer
+
+	def post(self, request, format=None): #what to do if u recieved a post request
+		data = request.data #retrieve data 
+		serializer = UserLoginSerializer(data=data) #put the data in the serializer
+		if serializer.is_valid(raise_exception=True): #check if the data is valid #raise_exception=True means show the error messages 
+			new_data = serializer.data #if valid save the data
+			return Response(new_data, status=HTTP_200_OK) #if everything is ok show this message
+		return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+
+
+class UserCreateView(CreateAPIView):
+	queryset = User.objects.all()
+	serializer_class = UserCreateSerializer
+
+
 
 class CommentListView(ListAPIView): #show the comment for all list objects
 	serializer_class = CommentListSerializer
@@ -27,14 +50,14 @@ class CommentListView(ListAPIView): #show the comment for all list objects
 				).distinct()
 		return queryset
 
-class CommentCreateView(CreateAPIView):
+class CommentCreateView(CreateAPIView): #create a comment 
 	queryset = Comment.objects.all()
 	serializer_class = CommentCreateSerializer
 	permission_classes = [IsAuthenticated]
 
 	def perform_create(self, serializer):
 		serializer.save(
-			content_type=ContentType.objects.get_for_model(Fatmaa), #getting a model (ContentType) from a model(Mode)
+			content_type=ContentType.objects.get_for_model(Fatmaa), #getting a model (ContentType) from a model(Mode) #the type of object related to which is the model
 			site=Site.objects.get(id=1),
 			user=self.request.user,
 			user_name=self.request.user.username,
@@ -45,7 +68,7 @@ class PostListView(ListAPIView):
 	#note: queryset and serializer_class are not variables so thier names should be the same
 	queryset = Fatmaa.objects.all() #shows the posta list of objects
 	serializer_class = PostListSerializer #serialize the object to put them in json structure 
-	filter_backends = [SearchFilter,] #option 1 to to filter through the list  
+	filter_backends = [SearchFilter, OrderingFilter] #option 1 to to filter through the list  
 	search_fields=['title', 'content', 'author__username'] #to filter the search based on title ,content and author name #author is a foriegnkey which is an object.. the username of an object #refere to the field from an object #when refering to the field need __ but . used  when using it 
 	permission_classes = [AllowAny] 
 

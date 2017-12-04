@@ -11,6 +11,8 @@ urlpatterns = [
     url(r'^(?P<post_slug>[-\w]+)/detail/$', views.PostDetailView.as_view(), name='detail'),
     url(r'^(?P<post_slug>[-\w]+)/delete/$', views.PostDeletelView.as_view(), name='delete'), #we added /delete/ cause there are to ways etheir delete or update inside the detail
     url(r'^(?P<post_slug>[-\w]+)/update/$', views.PostUpdateView.as_view(), name='update'),
+    url(r'^register/$', views.UserCreateView.as_view(), name='register'),
+    url(r'^login/$', views.UserLoginView.as_view(), name='login'),
    
 
     ]
