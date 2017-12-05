@@ -25,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'r6vs$n-aq*-av#3h$vhmr01t4-fxw5+p&v9-1g8rc2_d(m^h5+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['165.227.170.111', '127.0.0.1']
 
 
 # Application definition
@@ -102,13 +102,23 @@ WSGI_APPLICATION = 'dblog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2', #psypog2 is a python pacage to allow dgango project work w postgresql database
+        'NAME': 'django',
+        'USER': 'django',
+        'PASSWORD':'60901911634777bed6b99e45676c8376',
+        'HOST': 'localhost',
+        'PORT':'',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

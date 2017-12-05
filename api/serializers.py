@@ -8,7 +8,7 @@ from rest_framework_jwt.settings import api_settings
 class UserLoginSerializer(serializers.Serializer): #didnt use modelserializer cause not modifing anything in the database
 	username = serializers.CharField()
 	password = serializers.CharField(style={"input_type":"password"} , write_only=True)
-	token = serializers.CharField(read_only=True, allow_blank=True) #read_only=True means dont want the user to create the token dont want the user to create the token
+	token = serializers.CharField(read_only=True, allow_blank=True) #read_only=True means dont want the user to create the token dont want the user to create the token #allow_blank=True because a user will not always get a token back if he doesn't log in successfully
 
 	def validate(self, data): #handles all data validation #buitl in function in Serializer
 		username = data.get('username') #get the username from database
@@ -46,7 +46,7 @@ class UserCreateSerializer(serializers.ModelSerializer): #for signup
 		username = validated_data['username'] #retrieve the username
 		password = validated_data['password']
 		new_user = User(username=username) #take the username and put it in new_user but don't save it yet
-		new_user.set_password(password) 
+		new_user.set_password(password) #hashing the pass
 		new_user.save()
 		return validated_data
 
