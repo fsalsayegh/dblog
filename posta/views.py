@@ -29,9 +29,9 @@ def usersignup(request):
 			auth = authenticate(username=username, password=password) #used to login after signing up #authinticate the username and password of the user
 			login(request, auth) #login the user to the page
 
-			return redirect("list") #return to the list page
+			return redirect("home:list") #return to the list page
 		messages.warning(request, form.errors) #an error message will be showen if the form is not valid
-		return redirect("signup") #return to the signup page
+		return redirect("home:signup") #return to the signup page
 	return render(request, 'signup.html', context) #return to the signup page if the user didn't submit any data to the form
 
 
@@ -60,7 +60,7 @@ def userlogin(request):
 
 def userlogout(request):
 	logout(request) 
-	return redirect("login")
+	return redirect("home:login")
 
 
 def post_list(request):
@@ -132,7 +132,7 @@ def post_create(request):
 		fatma_post.save() #save the form
 
 		messages.success(request, "Awesome, you just added a blog post !")
-		return redirect("list")
+		return redirect("home:list")
 	context ={"form":form}
 	return render(request, "post_create.html", context)
 
@@ -145,7 +145,7 @@ def post_update(request, post_slug):
 	if form.is_valid():
 		form.save()
 		messages.info(request, "you just changed a blog post")
-		return redirect("list")
+		return redirect("home:list")
 	context ={"form":form, "item":item}
 	return render(request, "post_update.html", context)
 
@@ -154,7 +154,7 @@ def post_delete(request, post_slug):
 		raise Http404
 	Fatmaa.objects.get(slug=post_slug).delete() #delete a specific object or post
 	messages.warning(request, "deleted")
-	return redirect("list")
+	return redirect("home:list")
 
 
 
